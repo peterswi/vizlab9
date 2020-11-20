@@ -13,81 +13,84 @@
     <body>
         <div id='header'>
             <h1>
-                Visualizations Lab 9:
+                Visualizations Lab 9: <i>The Final Chapter</i>
             </h1>
-            <h2>
-                The Final Chapter
-            </h2>
+           
             <h3>
                 Will Peters
             </h3>
         </div>
-        <div id='vis'></div>
-        <script>
-            var vegaSpec={
-            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-            "title": {"text":"Deaths vs Positive Cases by State","anchor":"middle"},
-            "data":{"url":"https://api.covidtracking.com/v1/states/current.csv"}
-            ,
-            "vconcat":[
-            {
-                "width": 500,
-                "height": 250,
-                "mark": {"type": "point"},
-                "encoding": {
-                    "x":{
-                    "field":"positive",
-                    "type":"quantitative",
-                    "title": "Positive Cases"
+        <div class='row'>
+            <div class='column column-35'></div>
+            <div class='column column-30'>
+                <div id='vis'></div>
+                <script>
+                    var vegaSpec={
+                    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+                    "title": {"text":"Deaths vs Positive Cases by State","anchor":"middle"},
+                    "data":{"url":"https://api.covidtracking.com/v1/states/current.csv"}
+                    ,
+                    "vconcat":[
+                    {
+                        "width": 500,
+                        "height": 250,
+                        "mark": {"type": "point"},
+                        "encoding": {
+                            "x":{
+                            "field":"positive",
+                            "type":"quantitative",
+                            "title": "Positive Cases"
+                            },
+                            "y":{
+                            "field": "death",
+                            "type":"quantitative",
+                            "title": "Deaths"
+                            },
+                            "color":{
+                            "condition":{
+                                "selection":"brush",
+                                "field":"dataQualityGrade","title":"Data Quality"},"value":"grey"},
+                            "tooltip":{
+                            "field":"state","type": "nominal"
+                            }
+                        },
+                        "selection": {
+                    "brush":{"type":"interval"} 
+                        }
                     },
-                    "y":{
-                    "field": "death",
-                    "type":"quantitative",
-                    "title": "Deaths"
-                    },
-                    "color":{
-                    "condition":{
-                        "selection":"brush",
-                        "field":"dataQualityGrade","title":"Data Quality"},"value":"grey"},
-                    "tooltip":{
-                    "field":"state","type": "nominal"
+
+
+                    {
+                        "repeat": ["hospitalizedCumulative", "recovered"],
+                        "columns": 1,
+                        "spec":{
+                            "height":"150",
+                            "width":"500",
+                        "mark":  "bar",
+                        "encoding": {
+                            "x":{
+                            "field":"state",
+                            "type":"nominal",
+                            "title":"State"
+                            },
+                            "y":{
+                            "field": {"repeat": "repeat"},
+                            "type":"quantitative"
+                            }
+                            
+                        },"transform": [{
+                    "filter":{"selection":"brush"}
+                    }]
+                        }
                     }
-                },
-                "selection": {
-            "brush":{"type":"interval"} 
-                }
-            },
 
-
-            {
-                "repeat": ["hospitalizedCumulative", "recovered"],
-                "columns": 1,
-                "spec":{
-                    "height":"150",
-                    "width":"500",
-                "mark":  "bar",
-                "encoding": {
-                    "x":{
-                    "field":"state",
-                    "type":"nominal",
-                    "title":"State"
-                    },
-                    "y":{
-                    "field": {"repeat": "repeat"},
-                    "type":"quantitative"
-                    }
-                    
-                },"transform": [{
-            "filter":{"selection":"brush"}
-            }]
-                }
-            }
-
-            ]
-            };
-            vegaEmbed('#vis', vlSpec)
-        </script>
-
+                    ]
+                    };
+                    vegaEmbed('#vis', vegaSpec)
+                </script>
+                </div>
+            <div class='column column-30'></div>
+        </div>
 
     </body>
 </html>
