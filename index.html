@@ -7,12 +7,84 @@
         <!-- Milligram CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
         <link rel='stylesheet' href='styles.css'>
-        
+
     </head>
 
     <body>
+        <h1>
+            Visualizations Lab 9:
+        </h1>
+        <h2>
+            The Final Chapter
+        </h2>
+        <h3>
+            Will Peters
+        </h3>
+        <div id='vis'></div>
+        <script>
+            var vegaSpec={
+            "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+            "title": {"text":"Deaths vs Positive Cases by State","anchor":"middle"},
+            "data":{"url":"https://api.covidtracking.com/v1/states/current.csv"}
+            ,
+            "vconcat":[
+            {
+                "width": 500,
+                "height": 250,
+                "mark": {"type": "point"},
+                "encoding": {
+                    "x":{
+                    "field":"positive",
+                    "type":"quantitative",
+                    "title": "Positive Cases"
+                    },
+                    "y":{
+                    "field": "death",
+                    "type":"quantitative",
+                    "title": "Deaths"
+                    },
+                    "color":{
+                    "condition":{
+                        "selection":"brush",
+                        "field":"dataQualityGrade","title":"Data Quality"},"value":"grey"},
+                    "tooltip":{
+                    "field":"state","type": "nominal"
+                    }
+                },
+                "selection": {
+            "brush":{"type":"interval"} 
+                }
+            },
 
 
+            {
+                "repeat": ["hospitalizedCumulative", "recovered"],
+                "columns": 1,
+                "spec":{
+                    "height":"150",
+                    "width":"500",
+                "mark":  "bar",
+                "encoding": {
+                    "x":{
+                    "field":"state",
+                    "type":"nominal",
+                    "title":"State"
+                    },
+                    "y":{
+                    "field": {"repeat": "repeat"},
+                    "type":"quantitative"
+                    }
+                    
+                },"transform": [{
+            "filter":{"selection":"brush"}
+            }]
+                }
+            }
+
+            ]
+            };
+            vegaEmbed('#vis', vlSpec)
+        </script>
 
 
     </body>
