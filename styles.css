@@ -1,0 +1,13 @@
+body{
+    background-color: lightgrey;
+
+}
+#header{
+    font-weight: bold;
+    color: purple;
+    text-align: center;
+
+}
+#content{
+    display: inline-block;
+}
