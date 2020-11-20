@@ -28,8 +28,10 @@
                     var vegaSpec={
                     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
                     "title": {"text":"Deaths vs Positive Cases by State","anchor":"middle"},
+                    "background":"lightgrey",
                     "data":{"url":"https://api.covidtracking.com/v1/states/current.csv"}
                     ,
+                    "config": {"color":"black"},
                     "vconcat":[
                     {
                         "width": 500,
@@ -64,8 +66,8 @@
                         "repeat": ["hospitalizedCumulative", "recovered"],
                         "columns": 1,
                         "spec":{
-                            "height":"150",
-                            "width":"500",
+                            "height":150,
+                            "width":500,
                         "mark":  "bar",
                         "encoding": {
                             "x":{
